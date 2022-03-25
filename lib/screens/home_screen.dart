@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/cubit/mode_cubit.dart';
 import 'package:news_app/cubit/news_cubit.dart';
+import 'package:news_app/screens/search_screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -22,17 +25,30 @@ class HomeScreen extends StatelessWidget {
               title: const Text('News App'),
               actions: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => BlocProvider(
+                              create: (context) => NewsCubit(),
+                              child: const SearchScreen(),
+                            )),
+                      ),
+                    );
+                  },
+                  icon: Icon(
                     Icons.search,
-                    color: Colors.black,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                  onPressed: () async {
+                   
+                    ModeCubit.get(context).changeTheme();
+                  },
+                  icon: Icon(
                     Icons.brightness_2_rounded,
-                    color: Colors.black,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ),
               ],

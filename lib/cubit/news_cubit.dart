@@ -14,10 +14,12 @@ class NewsCubit extends Cubit<NewsState> {
 
   static NewsCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
+  NewsApi newsApi = NewsApi();
 
   List<News> allBusinessNews = [];
   List<News> allSportsNews = [];
   List<News> allSciencesNews = [];
+  List<News> allSearchNews = [];
 
   List<String> titles = [
     'Business',
@@ -47,8 +49,6 @@ class NewsCubit extends Cubit<NewsState> {
   getNews(category) async {
     emit(NewsLoadingState());
 
-    NewsApi newsApi = NewsApi();
-
     await newsApi.getData(category).then((value) {
       emit(NewsSuccessState());
       if (category == 'business') {
@@ -60,4 +60,15 @@ class NewsCubit extends Cubit<NewsState> {
       }
     });
   }
+
+  searchNews(String data) async {
+    emit(NewsSearchLoadingState());
+
+    await newsApi.searchData(data).then((value) {
+      allSearchNews = value;
+      emit(NewsSearchSuccessState());
+    });
+  }
+
+  
 }

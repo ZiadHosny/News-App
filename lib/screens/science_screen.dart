@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/cubit/news_cubit.dart';
 import 'package:news_app/models/news.dart';
+import 'package:news_app/screens/web_page_view_screen.dart';
 
 class ScienceScreen extends StatelessWidget {
   @override
@@ -26,6 +27,14 @@ class ScienceScreen extends StatelessWidget {
                       SizedBox(
                         height: 100,
                         child: ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => WebViewScreen(
+                                          url: news[index].url,
+                                        ))));
+                          },
                           leading: Container(
                             width: 120,
                             height: 100,
@@ -42,6 +51,7 @@ class ScienceScreen extends StatelessWidget {
                             news[index].title,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyText1
                           ),
                           subtitle: Text(
                             news[index].publishedAt,
